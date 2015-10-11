@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Mocha Tests</title>
+    <link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="mocha"></div>
+
+    <script src="https://cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
+    <script src="../src/tally.js"></script>
+    <script src="https://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
+    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.3.0/chai.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js"></script>
+    <script>mocha.setup('bdd')</script>
+    <script src="spec.ui.js"></script>
+    <script>
+    mocha.checkLeaks();
+    mocha.globals(['jQuery']);
+    mocha.run();
+    </script>
+
+    <div style="margin: 20px;">
+        <input id="testControl" type="text" />
+    </div>
+</body>
+</html>
