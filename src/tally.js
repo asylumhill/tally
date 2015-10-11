@@ -6,17 +6,25 @@
 
 (function ($) {
     'use strict';
-
+    
     var tallyItem = function (textValue, idValue) {
         this.text = textValue;
         this.elementId = idValue;
         this.removeElementId =  idValue + '_remove';
     };
-
+    
+    var tallyType = {
+       none: { name: "NONE", regex: null },
+       email: { name: "EMAIL", regex: /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i },
+       hashtag: { name: "HASHTAG", regex: /(#?)([a-z\d-]+)/ig },
+       regex: { name: "REGEX", regex: "" },
+    };
+    
     $.fn.tally = function (options) {
         this.name = "TallyInputControlV1";
         this.items = [];
         this.index = 1;
+        this.type = tallyType.none;
         this._lastInputText = "";
         this._lastKeyCode = null;
         this._tripKeyCodes = [13, 32, 44, 59];
@@ -69,14 +77,33 @@
         this._processTrippedText = function (inputText) {
             if (!inputText) return;
 
-            if (inputText && inputText != "" && inputText.length >= settings.minLength) {
+            if (inputText && inputText != "" && inputText.length >= settings.minLength
+                && (this.type == tallyType.none || this.type.regex.test(inputText))) {
                 this.insertItem.call(this, inputText);
 
-                // clear changes
                 this.setValue("");
             }
         };
-
+        
+        this.setType = function (value) {
+            if (value == undefined || value == null) return;
+            
+            switch(value.toUpperCase()){
+                case tallyType.email.name: 
+                    this.type = tallyType.email;
+                    break;
+                case tallyType.hashtag.name:
+                    this.type = tallyType.hashtag;
+                    break;
+                case tallyType.regex.name:
+                    this.type = tallyType.regex;
+                    break;
+                default:
+                    this.type = tallyType.none;
+                    break;
+            }
+        };
+        
         this.setValue = function (value) {
             this._unbindChangeTracking();
             this.val(value)

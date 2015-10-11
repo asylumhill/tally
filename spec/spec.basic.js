@@ -100,7 +100,7 @@ describe('TallyStructure', function () {
             tally.trigger($.Event('keypress', { keyCode: 84 })); // ;
             assert.ok(tally.items.length == 0);
         });
-
+        
         it('should not consider anything under minLength', function () {
             // negative test
             // minlength set to 3 in setup
@@ -108,7 +108,22 @@ describe('TallyStructure', function () {
             tally.trigger($.Event('keypress', { keyCode: 13 })); // return
             assert.ok(tally.items.length == 0);
         });
-
+        
+        it('should except email when email type', function () {
+            // negative test
+            tally.setValue("testingemailaddress@gmail.com");
+            tally.setType('EMAIL');
+            tally.trigger($.Event('keypress', { keyCode: 13 })); // return
+            assert.ok(tally.items[0].text == "testingemailaddress@gmail.com");
+        });
+        
+        it('should only except emails when email type', function () {
+            // negative test
+            tally.setValue("TESTNOTEMAIL");
+            tally.setType('EMAIL');
+            tally.trigger($.Event('keypress', { keyCode: 13 })); // return
+            assert.ok(tally.items.length == 0);
+        });
     });
 
     describe('#HTMLIsInPlace', function () {
