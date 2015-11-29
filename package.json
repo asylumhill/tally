@@ -1,0 +1,37 @@
+{
+  "name": "jquery-tally",
+  "version": "1.0.0",
+  "description": "jQuery UI plugin that creates a list automatically as user types into textbox.",
+  "main": "src/tally.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asylumhill/tally.git"
+  },
+  "keywords": [
+    "jquery",
+    "plugin",
+    "list",
+    "list",
+    "control",
+    "textbox",
+    "textbox",
+    "list",
+    "automatic",
+    "list",
+    "email",
+    "list",
+    "hashtag",
+    "list",
+    "smart",
+    "textbox"
+  ],
+  "author": "Asylum Hill Software, LLC.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/asylumhill/tally/issues"
+  },
+  "homepage": "https://github.com/asylumhill/tally#readme"
+}

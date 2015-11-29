@@ -220,7 +220,6 @@
             borderColor: "#ddd",
             borderWidth: "1px",
             borderStyle: "solid",
-            backgroundColor: "#fff",
             minLength: 2,
             inputWidth: "175px",
         }, options );
@@ -243,7 +242,6 @@
             verticalAlign: "top",
             fontSize: settings.fontSize,
             color: settings.color,
-            backgroundColor: settings.backgroundColor
         });
  
     };
