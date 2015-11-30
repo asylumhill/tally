@@ -25,44 +25,55 @@ describe('TallyStructure', function () {
 
     describe('#BasicBehaivors', function () {
         it ('should capture the key press event', function () {
-            tally.trigger($.Event('keypress', { keyCode: 84 }));
+            tally.trigger($.Event('keydown', { keyCode: 84 }));
             console.log("Last key code", tally._lastKeyCode);
             assert.ok(tally._lastKeyCode == 84);
         });
 
         it('should consider complete when space', function () {
             tally.setValue("TEST1");
-            tally.trigger($.Event('keypress', { keyCode: 32 })); // space
+            tally.trigger($.Event('keydown', { keyCode: 32 })); // space
             assert.ok(tally.items[0].text == "TEST1");
         });
 
         it('should consider complete when enter', function () {
             tally.setValue("TEST2");
-            tally.trigger($.Event('keypress', { keyCode: 13 })); // return
+            tally.trigger($.Event('keydown', { keyCode: 13 })); // return
             assert.ok(tally.items[0].text == "TEST2");
         });
-
-        it('should consider complete when comma entered', function () {
+        
+        it('should consider complete when tab', function () {
             tally.setValue("TEST3");
-            tally.trigger($.Event('keypress', { keyCode: 44 })); // ,
+            tally.trigger($.Event('keydown', { keyCode: 9 })); // return
             assert.ok(tally.items[0].text == "TEST3");
         });
-
-        it('should consider complete when semi-colon entered', function () {
+        
+        it('should consider complete when comma entered', function () {
             tally.setValue("TEST4");
-            tally.trigger($.Event('keypress', { keyCode: 59 })); // ;
+            tally.trigger($.Event('keydown', { keyCode: 44 })); // ,
             assert.ok(tally.items[0].text == "TEST4");
         });
 
-        it('should clear text when entered', function () {
+        it('should consider complete when semi-colon entered', function () {
             tally.setValue("TEST5");
-            tally.trigger($.Event('keypress', { keyCode: 13 })); // return
+            tally.trigger($.Event('keydown', { keyCode: 59 })); // ;
+            assert.ok(tally.items[0].text == "TEST5");
+        });
+        
+        it('should consider complete when blurred', function () {
+            // Was not able to quickly write a test for this scenerio
+            // can be manually tested using spec.ui.html
+        });
+        
+        it('should clear text when entered', function () {
+            tally.setValue("TEST6");
+            tally.trigger($.Event('keydown', { keyCode: 13 })); // return
             assert.ok(tally.val() == "");
         });
 
         it('when remove called DOM and item list should clear item', function () {
             tally.setValue("DELETETESTITEM");
-            tally.trigger($.Event('keypress', { keyCode: 13 })); // return
+            tally.trigger($.Event('keydown', { keyCode: 13 })); // return
             assert.ok(tally.items[0].text == "DELETETESTITEM");
             tally.removeItem(tally.items[0].elemendId);
             assert.ok(tally.items.length <= 0);
@@ -96,8 +107,8 @@ describe('TallyStructure', function () {
 
         it('should not consider text complete when not enter, space, semi-colon, comma entered', function () {
             // negative test
-            tally.setValue("TEST6");
-            tally.trigger($.Event('keypress', { keyCode: 84 })); // ;
+            tally.setValue("TEST7");
+            tally.trigger($.Event('keydown', { keyCode: 84 })); // ;
             assert.ok(tally.items.length == 0);
         });
         
@@ -105,7 +116,7 @@ describe('TallyStructure', function () {
             // negative test
             // minlength set to 3 in setup
             tally.setValue("TE");
-            tally.trigger($.Event('keypress', { keyCode: 13 })); // return
+            tally.trigger($.Event('keydown', { keyCode: 13 })); // return
             assert.ok(tally.items.length == 0);
         });
         
@@ -113,7 +124,7 @@ describe('TallyStructure', function () {
             // negative test
             tally.setValue("testingemailaddress@gmail.com");
             tally.setType('EMAIL');
-            tally.trigger($.Event('keypress', { keyCode: 13 })); // return
+            tally.trigger($.Event('keydown', { keyCode: 13 })); // return
             assert.ok(tally.items[0].text == "testingemailaddress@gmail.com");
         });
         
@@ -121,7 +132,7 @@ describe('TallyStructure', function () {
             // negative test
             tally.setValue("TESTNOTEMAIL");
             tally.setType('EMAIL');
-            tally.trigger($.Event('keypress', { keyCode: 13 })); // return
+            tally.trigger($.Event('keydown', { keyCode: 13 })); // return
             assert.ok(tally.items.length == 0);
         });
     });
@@ -135,7 +146,7 @@ describe('TallyStructure', function () {
         it('in memory item & html item should be added after text is entered', function () {
             var startLength = tally.items.length;
             tally.setValue("TESTITEMS");
-            tally.trigger($.Event('keypress', { keyCode: 32 })); // space
+            tally.trigger($.Event('keydown', { keyCode: 32 })); // space
             assert.ok(startLength < tally.items.length);
             assert.ok($('#' + tally.items[0].elementId).length);
         });

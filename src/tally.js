@@ -27,7 +27,7 @@
         this.type = tallyType.none;
         this._lastInputText = "";
         this._lastKeyCode = null;
-        this._tripKeyCodes = [13, 32, 44, 59];
+        this._tripKeyCodes = [9, 13, 32, 44, 59];
         this._tripDeleteKeyCodes = [8, 127];
         this._wrapperElementId = "";
         this._itemCounter = 0;
@@ -38,13 +38,19 @@
         }
 
         this._bindChangeTracking = function () {
-            this.bind('keypress', (function (e) {
+            this.bind('focusout', (function (e) {
+              this._processTrippedText(this.getValue());
+            }).bind(this));
+  
+            this.bind('keydown', (function (e) {
                 this._lastKeyCode = e.keyCode;
-                console.log("KEYPRESS", this._lastKeyCode);
+                console.log("KEYDOWN", this._lastKeyCode);
 
                 if (this._tripKeyCodes.indexOf(this._lastKeyCode) > -1) {
                     this._processTrippedText(this.getValue());
-                    return false;
+                    
+                    // special case for the tak key
+                    return (false || (this._lastKeyCode == 9));
                 }
                 
             }).bind(this));
@@ -62,7 +68,7 @@
         };
 
         this._unbindChangeTracking = function () {
-            this.unbind('keypress');
+            this.unbind('keydown');
             this.unbind('keyup');
         };
 
