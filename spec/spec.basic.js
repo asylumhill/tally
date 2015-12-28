@@ -75,6 +75,7 @@ describe('TallyStructure', function () {
             tally.setValue("DELETETESTITEM");
             tally.trigger($.Event('keydown', { keyCode: 13 })); // return
             assert.ok(tally.items[0].text == "DELETETESTITEM");
+            console.log(tally.items[0].elemendId);
             tally.removeItem(tally.items[0].elemendId);
             assert.ok(tally.items.length <= 0);
         });

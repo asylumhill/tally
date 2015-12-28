@@ -1,6 +1,6 @@
 {
   "name": "jquery-tally",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "jQuery UI plugin that creates a list automatically as user types into textbox.",
   "main": "src/tally.js",
   "scripts": {

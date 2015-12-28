@@ -5,7 +5,7 @@ describe('TallyUI', function () {
     var tally = null;
 
     beforeEach(function () {
-        tally = new $('#testControl').tally({ fontSize: "20px" }).focus();
+      tally = new $('#testControl').tally({ fontSize: "20px" });
     });
 
     afterEach(function () {

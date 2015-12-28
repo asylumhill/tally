@@ -35,13 +35,22 @@
         this._init = function () {
             this._createWrapper();
             this._bindChangeTracking();
+            this.addClass(settings.inputClass);
         }
 
         this._bindChangeTracking = function () {
             this.bind('focusout', (function (e) {
               this._processTrippedText(this.getValue());
+              this.removeClass(settings.focusClass);
+              this.parent().removeClass(settings.focusClass);
             }).bind(this));
-  
+            
+            this.bind('focusin', (function (e) {
+              this._processTrippedText(this.getValue());
+              this.addClass(settings.focusClass);
+              this.parent().addClass(settings.focusClass);
+            }).bind(this));
+            
             this.bind('keydown', (function (e) {
                 this._lastKeyCode = e.keyCode;
                 console.log("KEYDOWN", this._lastKeyCode);
@@ -180,11 +189,13 @@
                 textOverflow: "ellipsis",
                 maxWidth: settings.maxItemWidth,
                 overflow: "hidden"
-            });
+            }).addClass(settings.itemClass);
+            
+            deleteElement.addClass(settings.itemRemoveClass);
             deleteElement.appendTo(itemElement);
 
             itemElement.insertBefore(this);
-
+            
             // wire up remove click
             deleteElement.bind('click', (function (e) {
                 this.removeItem.call(this, item.elementId);
@@ -205,6 +216,17 @@
                     fontSize: settings.fontSize,
                     minWidth: settings.inputWidth,
                 });
+                
+                wrapper.addClass(settings.class);
+                // wire up remove click
+                wrapper.bind('click', (function (e) {
+                  this.focus();
+                }).bind(this));
+                
+                wrapper.bind('focus', (function (e) {
+                  this.focus();
+                }).bind(this));
+                
                 this.wrap(wrapper);
             }
         };
@@ -228,6 +250,11 @@
             borderStyle: "solid",
             minLength: 2,
             inputWidth: "175px",
+            class: "tally",
+            inputClass: "tally-input",
+            focusClass: "tally-focus",
+            itemClass: "tally-item",
+            itemRemoveClass: "tally-item-remove",
         }, options );
         
         // wire up control
@@ -249,7 +276,5 @@
             fontSize: settings.fontSize,
             color: settings.color,
         });
- 
     };
- 
 }( jQuery ));
